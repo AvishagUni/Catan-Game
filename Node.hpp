@@ -1,9 +1,14 @@
+#include "Player.hpp"
+#include "Edge.hpp"
+
 class Node
 {
     int id;
-    int owner;
+    Player* owner;
     string type;
-    vector<Node *> neighbours;
+    int val;
+    vector<Node *> adjNodes;
+    vector<Edge *> adjEdges;
 
 public:
     Node(int i);
@@ -11,11 +16,16 @@ public:
     string getType();
     void setType();
 
-    int getOwner();
-    void setOwner(int playerNumber);
+    int getVal();
 
-    vector<Node *> getNeighbours();
-    // void setNeighbour(Node *node);
+    Player* getOwner();
+    void setOwner(Player* o);
 
     int getId() const;
+
+    void addNeighbour(Node* n);
+    void addEdge(Edge* e);
+    
+    vector<Node *> getAdjSettlements();
+    vector<Edge *> getAdjRoads();
 };
