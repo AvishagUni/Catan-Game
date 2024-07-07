@@ -1,31 +1,53 @@
 #include "Board.hpp"
+#include <map>
 
 using namespace std;
 
 Board::Board()
 {
-    nodes = initializeNodes(54);
+    nodes = initializeNodes(54, edge_data, edges);
     tiles = initializeTiles(19, nodes, tile_data);
-    edges = initializeEdges(72);
+    edges = initializeEdges(72, edge_data);
 }
 
-// Function to initialize nodes
-vector<Node> initializeNodes(int numNodes)
+Board::~Board()
 {
-    vector<Node> nodes;
-    for (int i = 0; i < numNodes; i++)
-    {
+    nodes.clear();
+    tiles.clear();
+    edges.clear();
+}
+
+std::vector<Node> Board::initializeNodes(int numNodes, const std::vector<std::pair<int, int>>& edgeData, std::vector<Edge>& edges) {
+    std::vector<Node> nodes;
+
+    // Create nodes
+    for (int i = 0; i < numNodes; i++) {
         nodes.push_back(Node(i));
     }
+
+    // Initialize edges and set up adjacency lists
+    for (size_t i = 0; i < edgeData.size(); ++i) {
+        int node1 = edgeData[i].first;
+        int node2 = edgeData[i].second;
+
+        edges.push_back(Edge(i));
+        edges[i].setAdjSettlements(&nodes[node1], &nodes[node2]);
+        nodes[node1].addNeighbour(&nodes[node2]);
+        nodes[node2].addNeighbour(&nodes[node1]);
+
+        nodes[node1].addEdge(&edges[i]);
+        nodes[node2].addEdge(&edges[i]);
+    }
+
     return nodes;
 }
 
 // Function to initialize tiles
-vector<Tile> initializeTiles(int numTiles, vector<Node> &nodes, const vector<vector<int>> &tileData)
+vector<Tile> Board::initializeTiles(int numTiles, vector<Node> &nodes, const vector<vector<int>> &tileData)
 {
     vector<Tile> tiles;
     vector<int> tileNums = {10, 2, 9, 12, 6, 4, 10, 9, 11, 7, 3, 8, 8, 3, 4, 5, 5, 6, 11};
-    vector<string> tileResources = {"ore", "wool", "lumber", "grain", "brick", "wool", "brick", "grain", "lumber", "ore", "lumber", "ore", "lumber", "ore", "grain", "wool", "brick", "grain", "wool"};
+    vector<Resource> tileResources = {Resource::ORE, Resource::WOOL, Resource::LUMBER, Resource::GRAIN, Resource::BRICK, Resource::WOOL, Resource::BRICK, Resource::GRAIN, Resource::LUMBER, Resource::ORE, Resource::LUMBER, Resource::ORE, Resource::LUMBER, Resource::ORE, Resource::GRAIN, Resource::WOOL, Resource::BRICK, Resource::GRAIN, Resource::WOOL};
     for (int i = 0; i < numTiles; i++)
     {
         tiles.push_back(Tile(i, tileNums[i], tileResources[i]));
@@ -42,13 +64,41 @@ vector<Tile> initializeTiles(int numTiles, vector<Node> &nodes, const vector<vec
 }
 
 // Function to initialize edges
-vector<vector<Edge>> initializeEdges(int numNodes, const vector<pair<int, int>> &edgeData)
+vector<Edge> Board::initializeEdges(int numEdges, const vector<pair<int, int>> &edgeData)
 {
-    vector<vector<Edge>> edges(numNodes, vector<Edge>(numNodes));
-    for (auto edge : edgeData)
+    vector<Edge> edges;
+    for (int i =0 ; i < numEdges; i++)
     {
-        edges[edge.first][edge.second].setOwner(-1); // PlayerID -1
+        edges.push_back(Edge(i));
+
+        Node* node1 = &nodes[edgeData[i].first];
+        Node* node2 = &nodes[edgeData[i].second];
+
+        edges[i].setAdjSettlements(node1, node2);
     }
     return edges;
+}
+
+// Function to get a tile
+Tile *Board::getTile(int i)
+{
+    return &tiles[i];
+}
+
+// Function to get a node
+Node *Board::getNode(int i)
+{
+    return &nodes[i];
+}
+
+// Function to get an edge
+Edge *Board::getEdge(int i)
+{
+    return &edges[i];
+}
+
+vector<Tile> Board::getTiles()
+{
+    return tiles;
 }
 
