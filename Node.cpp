@@ -5,9 +5,11 @@
 using namespace std;
 
 Node::Node(int i) : id(i) {
-    owner = -1;
+    owner = nullptr;
     type = "";
-    this->neighbours = {0, 0, 0, 0, 0, 0};
+    val = 0;
+    this->adjNodes = {};
+    this->adjEdges = {};
 }
 
 string Node::getType()
@@ -17,35 +19,52 @@ string Node::getType()
 
 void Node::setType()
 {
-    if (type == "")
+    if (type == "") {
         type = "Settlement";
-    else if (type == "Settlement")
+        val = 1; }
+    else if (type == "Settlement") {
         type = "City";
+        val = 2; }
     }
 
-int Node::getOwner()
+Player* Node::getOwner()
 {
     return owner;
 }
 
-void Node::setOwner(int playerNumber)
+void Node::setOwner(Player* o)
 {
-    owner = playerNumber;
+    owner = o;
 }
 
-vector<Node *> Node::getNeighbours()
+vector<Node *> Node::getAdjSettlements()
 {
-    return neighbours;
+    return adjNodes;
 }
 
-// void Node::setNeighbour(Node *node)
-// {
-//     neighbours.push_back(node);
-// }
+vector<Edge *> Node::getAdjRoads()
+{
+    return adjEdges;
+}
 
 int Node::getId() const
 {
     return id;
+}
+
+int Node::getVal()
+{
+    return val;
+}
+
+void Node::addNeighbour(Node* n)
+{
+    adjNodes.push_back(n);
+}
+
+void Node::addEdge(Edge* e)
+{
+    adjEdges.push_back(e);
 }
 
 
