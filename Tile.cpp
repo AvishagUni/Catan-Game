@@ -1,8 +1,6 @@
 #include "Tile.hpp"
 
-Tile::Tile(int i, int n, string r) : id(i) {
-    number = n;
-    resource = r;
+Tile::Tile(int i, int num, Resource res) : id(i) , number(num), resource(res) {
     nodes = {0, 0, 0, 0, 0, 0};
 }
 
@@ -22,12 +20,12 @@ void Tile::addNodes(const vector<Node *> &nodes2)
     }
 }
 
-string Tile::getNumber() const
+int Tile::getNumber() const
 {
-    return to_string(number);
+    return number;
 }
 
-string Tile::getResource() const
+Resource Tile::getResource() const
 {
     return resource;
 }
