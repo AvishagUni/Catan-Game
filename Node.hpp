@@ -1,3 +1,5 @@
+// minnesav@gmail.com
+
 #ifndef NODE_HPP
 #define NODE_HPP
 
@@ -14,23 +16,23 @@ class Node
     vector<Edge *> adjEdges;
 
 public:
-    Node(int i);
+    Node(int i); // Constructor
 
-    string getType();
-    void setType();
+    string getType(); // Get the type of the node, i.e. settlement, city, or empty
+    void setType(); // Set the type of the node
 
-    int getVal();
+    int getVal();   // Get the value of the node (0-2)
 
-    Player* getOwner();
-    void setOwner(Player* o);
+    Player* getOwner(); // Get the owner of the node
+    void setOwner(Player* o); // Set the owner of the node
 
-    int getId() const;
+    int getId() const; // Get the id of the node
 
-    void addNeighbour(Node* n);
-    void addEdge(Edge* e);
+    void addNeighbour(Node* n); // Add a neighbouring node
+    void addEdge(Edge* e); // Add an edge to the node
     
-    vector<Node *> getAdjSettlements();
-    vector<Edge *> getAdjRoads();
+    vector<Node *> getAdjSettlements(); // Get the adjacent settlements
+    vector<Edge *> getAdjRoads(); // Get the adjacent roads
 };
 
 #endif // NODE_HPP
