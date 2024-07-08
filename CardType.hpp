@@ -1,3 +1,5 @@
+// minnesav@gmail.com
+
 #ifndef CARD_TYPE_HPP  
 #define CARD_TYPE_HPP
 
