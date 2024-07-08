@@ -1,6 +1,13 @@
-#include "Player.hpp"
+// minnesav@gmail.com
 
-Player::Player(string name) : name(name), points(0) {
+#include "Player.hpp"
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+
+using namespace std;
+
+Player::Player(string name) : name(name), points(0), knights(0) {
     settlements = {};
     cities = {};
     roads = {};
@@ -58,44 +65,35 @@ size_t Player::stealResource(Resource resource) {
     return amount;
 }
 
-bool Player::canBuyRoad() const
-{
-    if(this->resources[0] >= 1 && this->resources[2] >= 1)
-    {
+bool Player::canBuyRoad() const {
+    if (this->resources[0] >= 1 && this->resources[2] >= 1) {
         return true;
     }
     return false;
 }
 
-bool Player::canBuySettlement() const
-{
-    if(this->resources[0] >= 1 && this->resources[1] >= 1 && this->resources[2] >= 1 && this->resources[4] >= 1)
-    {
+bool Player::canBuySettlement() const {
+    if (this->resources[0] >= 1 && this->resources[1] >= 1 && this->resources[2] >= 1 && this->resources[4] >= 1) {
         return true;
     }
     return false;
 }
 
-bool Player::canBuyCity() const
-{
-    if(this->resources[1] >= 2 && this->resources[3] >= 3)
-    {
+bool Player::canBuyCity() const {
+    if (this->resources[1] >= 2 && this->resources[3] >= 3) {
         return true;
     }
     return false;
 }
 
-bool Player::canBuyDevelopmentCard() const
-{
-    if(this->resources[1] >= 1 && this->resources[3] >= 1 && this->resources[4] >= 1)
-    {
+bool Player::canBuyDevelopmentCard() const {
+    if (this->resources[1] >= 1 && this->resources[3] >= 1 && this->resources[4] >= 1) {
         return true;
     }
     return false;
 }
 
-int Player::rollDice() const
-{
+int Player::rollDice() const {
     int dice1 = rand() % 6 + 1;
     int dice2 = rand() % 6 + 1;
     int sum = dice1 + dice2;
@@ -103,59 +101,59 @@ int Player::rollDice() const
 }
 
 void Player::buyRoad(size_t idx) {
-        resources[0] -= 1;
-        resources[2] -= 1;
-        roads.push_back(idx);
+    resources[0] -= 1;
+    resources[2] -= 1;
+    roads.push_back(idx);
 }
 
 void Player::buySettlement(size_t idx) {
-        resources[0] -= 1;
-        resources[1] -= 1;
-        resources[2] -= 1;
-        resources[4] -= 1;
-        settlements.push_back(idx);
-        this->modifyPoints(1);
+    resources[0] -= 1;
+    resources[1] -= 1;
+    resources[2] -= 1;
+    resources[4] -= 1;
+    settlements.push_back(idx);
+    this->modifyPoints(1);
 }
 
 void Player::buyCity(size_t idx) {
-        resources[1] -= 2;
-        resources[3] -= 3;
-        cities.push_back(idx);
-        this->modifyPoints(1);
-        }
-
-void Player::buyDevelopmentCard() {
-        resources[1] -= 1;
-        resources[3] -= 1;
-        resources[4] -= 1;
-        int random = rand() % 5;
-        cout << this->getName() << " bought a card of type " << random << endl;
-        cards[random] += 1;
+    resources[1] -= 2;
+    resources[3] -= 3;
+    cities.push_back(idx);
+    this->modifyPoints(1);
 }
 
-void Player::tradeWithPlayer(Player* player, const vector<size_t>& resourcesToGive, const vector<size_t>& resourcesToTake)
-{
-    if (resourcesToGive.size() != resourcesToTake.size() || resourcesToGive.size() != resources.size())
-    {
+void Player::buyDevelopmentCard() {
+    resources[1] -= 1;
+    resources[3] -= 1;
+    resources[4] -= 1;
+    
+    // Seed the random number generator
+    srand(time(nullptr));
+    
+    // Generate a random number between 0 and 4
+    int random = rand() % 5;
+    
+    cout << this->getName() << " bought a card of type " << random << endl;
+    cards[random] += 1;
+}
+
+void Player::tradeWithPlayer(Player* player, const vector<size_t>& resourcesToGive, const vector<size_t>& resourcesToTake) {
+    if (resourcesToGive.size() != resourcesToTake.size() || resourcesToGive.size() != resources.size()) {
         throw invalid_argument("Resource vectors must have the same size as the player's resources");
     }
 
     // Check if both players have enough resources to trade
-    for (size_t i = 0; i < resourcesToGive.size(); i++)
-    {
-        if (this->resources[i] < resourcesToGive[i])
-        {
+    for (size_t i = 0; i < resourcesToGive.size(); i++) {
+        if (this->resources[i] < resourcesToGive[i]) {
             throw invalid_argument("Player initiating the trade does not have enough resources to give");
         }
-        if (player->resources[i] < resourcesToTake[i])
-        {
+        if (player->resources[i] < resourcesToTake[i]) {
             throw invalid_argument("Player accepting the trade does not have enough resources to give");
         }
     }
 
     // Perform the trade
-    for (size_t i = 0; i < resourcesToGive.size(); i++)
-    {
+    for (size_t i = 0; i < resourcesToGive.size(); i++) {
         this->resources[i] -= resourcesToGive[i];
         player->resources[i] -= resourcesToTake[i];
         this->resources[i] += resourcesToTake[i];
@@ -163,12 +161,10 @@ void Player::tradeWithPlayer(Player* player, const vector<size_t>& resourcesToGi
     }
 
     cout << "Trade completed successfully" << endl;
-} 
+}
 
-void Player::tradeWithBank(Resource resourceToGive, Resource resourceToTake)
-{
-    if (this->resources[static_cast<size_t>(resourceToGive)] < 4)
-    {
+void Player::tradeWithBank(Resource resourceToGive, Resource resourceToTake) {
+    if (this->resources[static_cast<size_t>(resourceToGive)] < 4) {
         throw invalid_argument("Not enough resources to trade with the bank");
     }
 
@@ -177,18 +173,15 @@ void Player::tradeWithBank(Resource resourceToGive, Resource resourceToTake)
     cout << "Trade completed successfully" << endl;
 }
 
-size_t Player::getKnights() const
-{
+size_t Player::getKnights() const {
     return knights;
 }
 
-void Player::modifyKnights(int amount)
-{
+void Player::modifyKnights(int amount) {
     knights += amount;
 }
 
-void Player::modifyCards(int amount, CardType card)
-{
+void Player::modifyCards(int amount, CardType card) {
     size_t cardIndex = static_cast<size_t>(card);
     cards[cardIndex] += amount;
 }
