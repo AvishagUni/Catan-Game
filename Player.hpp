@@ -1,7 +1,12 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include <iostream>
 #include <vector>
 #include "DevelopmentCard.hpp"
-
+#include "Board.hpp"
+#include "Catan.hpp"
+#include "CardType.hpp"
 
 using namespace std;
 
@@ -17,7 +22,7 @@ class Player {
     size_t knights;
 
     public:
-    Player(string name) : name(name), points(0) {}
+    Player(string name);
     ~Player();
 
     bool canBuyRoad() const;
@@ -47,7 +52,11 @@ class Player {
     void tradeWithPlayer(Player* player, const vector<size_t>& resourcesToGive, const vector<size_t>& resourcesToTake);
     void tradeWithBank(Resource resource1, Resource resource2);
 
+    void addRoad(int i);
+    void addSettlement(int i);
+
     int rollDice() const;
-    void endTurn() const;
 
 };
+
+#endif // PLAYER_HPP
