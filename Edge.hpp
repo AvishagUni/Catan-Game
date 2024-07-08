@@ -1,29 +1,31 @@
 // minnesav@gmail.com
 
-#include "Edge.hpp"
+#ifndef EDGE_HPP
+#define EDGE_HPP
 
-Edge::Edge(int i) : id(i), owner(nullptr)
-{
-    this->adjNodes = {};
-}
+#include <vector>
 
-Player* Edge::getOwner() const
-{
-    return owner;
-}
+class Node;
+class Player;
 
-void Edge::setOwner(Player* o)
-{
-    owner = o; 
-}
+using namespace std;
 
-vector<Node *> Edge::getAdjSettlements()
+class Edge
 {
-    return adjNodes;
-}
+    int id;
+    Player* owner;
+    vector<Node *> adjNodes;
 
-void Edge::setAdjSettlements(Node* n1, Node* n2)
-{
-    adjNodes.push_back(n1);
-    adjNodes.push_back(n2);
-}
+public:
+
+    Edge(int i); // Constructor
+    ~Edge() = default; // Destructor
+
+    Player* getOwner() const; // Get the owner of the edge
+    void setOwner(Player* o); // Set the owner of the edge
+
+    vector<Node *> getAdjSettlements(); // Get the adjacent settlements
+    void setAdjSettlements(Node* n1, Node* n2); // Set the adjacent settlements
+};
+
+#endif // EDGE_HPP
