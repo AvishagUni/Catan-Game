@@ -1,3 +1,5 @@
+// minnesav@gmail.com
+
 #include "Catan.hpp"
 #include "Tile.hpp"
 
@@ -71,7 +73,4 @@ int main()
     catan.checkWinCondition();
 
     return 0;
-
-
-
 }
