@@ -1,6 +1,4 @@
 #include "Player.hpp"
-#include "Board.hpp"
-#include "Catan.hpp"
 
 Player::Player(string name) : name(name), points(0) {
     settlements = {};
@@ -131,6 +129,7 @@ void Player::buyDevelopmentCard() {
         resources[3] -= 1;
         resources[4] -= 1;
         int random = rand() % 5;
+        cout << this->getName() << " bought a card of type " << random << endl;
         cards[random] += 1;
 }
 
@@ -178,11 +177,6 @@ void Player::tradeWithBank(Resource resourceToGive, Resource resourceToTake)
     cout << "Trade completed successfully" << endl;
 }
 
-void Player::endTurn() const
-{
-    cout << this->name << " has ended their turn" << endl;
-}
-
 size_t Player::getKnights() const
 {
     return knights;
@@ -197,6 +191,14 @@ void Player::modifyCards(int amount, CardType card)
 {
     size_t cardIndex = static_cast<size_t>(card);
     cards[cardIndex] += amount;
+}
+
+void Player::addRoad(int idx) {
+    roads.push_back(idx);
+}
+
+void Player::addSettlement(int idx) {
+    settlements.push_back(idx);
 }
 
 
