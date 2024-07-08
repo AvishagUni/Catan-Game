@@ -1,40 +1,35 @@
-#include "Tile.hpp"
+#ifndef TILE_HPP
+#define TILE_HPP
 
-Tile::Tile(int i, int num, Resource res) : id(i) , number(num), resource(res) {
-    nodes = {0, 0, 0, 0, 0, 0};
-}
+#include <string>
+#include <vector>
+#include <iostream>
 
+#include "Resource.hpp"
+#include "Node.hpp"
 
-void Tile::addNodes(const vector<Node *> &nodes2)
+using namespace std;
+
+class Node;
+
+class Tile
 {
-    for (int i = 0; i < 6; i++)
-    {
-        nodes[i] = nodes2[i];
-    }
-}
+    int id;
+    int number;
+    Resource resource; 
+    vector<Node *> nodes;
 
-int Tile::getNumber() const
-{
-    return number;
-}
+public:
+    Tile(int i, int num, Resource res);
+    ~Tile() = default;
 
-Resource Tile::getResource() const
-{
-    return resource;
-}
+    void addNodes(const vector<Node *> &nodes2);
 
-int Tile::getId() const
-{
-    return id;
-}
+    int getNumber() const;
+    Resource getResource() const;
+    int getId() const;
+    vector<size_t> getNodes() ;
+};
 
-vector<size_t> Tile::getNodes()
-{
-    vector<size_t> node_ids;
-    for (int i = 0; i < 6; i++)
-    {
-        node_ids.push_back(nodes[i]->getId());
-    }
-    return node_ids;
-}
+#endif // TILE_HPP
 
