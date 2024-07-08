@@ -1,35 +1,42 @@
-#ifndef TILE_HPP
-#define TILE_HPP
+// minnesav@gmail.com
 
-#include <string>
-#include <vector>
-#include <iostream>
+#include "Tile.hpp"
 
-#include "Resource.hpp"
-#include "Node.hpp"
+// Constructor
+Tile::Tile(int i, int num, Resource res) : id(i), number(num), resource(res) {
+    nodes = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr}; // Initialize nodes to nullptr
+}
 
-using namespace std;
+// Method to add nodes to the tile
+void Tile::addNodes(const vector<Node*>& nodes2) {
+    for (int i = 0; i < 6; i++) {
+        nodes[i] = nodes2[i]; // Assign nodes from nodes2 vector
+    }
+}
 
-class Node;
+// Getter for the number attribute
+int Tile::getNumber() const {
+    return number;
+}
 
-class Tile
-{
-    int id;
-    int number;
-    Resource resource; 
-    vector<Node *> nodes;
+// Getter for the resource attribute
+Resource Tile::getResource() const {
+    return resource;
+}
 
-public:
-    Tile(int i, int num, Resource res);
-    ~Tile() = default;
+// Getter for the id attribute
+int Tile::getId() const {
+    return id;
+}
 
-    void addNodes(const vector<Node *> &nodes2);
-
-    int getNumber() const;
-    Resource getResource() const;
-    int getId() const;
-    vector<size_t> getNodes() ;
-};
-
-#endif // TILE_HPP
+// Method to get IDs of connected nodes
+vector<size_t> Tile::getNodes() {
+    vector<size_t> node_ids;
+    for (int i = 0; i < 6; i++) {
+        if (nodes[i] != nullptr) {
+            node_ids.push_back(nodes[i]->getId()); // Add IDs of connected nodes to vector
+        }
+    }
+    return node_ids;
+}
 
