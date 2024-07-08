@@ -1,3 +1,6 @@
+#ifndef NODE_HPP
+#define NODE_HPP
+
 #include "Player.hpp"
 #include "Edge.hpp"
 
@@ -29,3 +32,5 @@ public:
     vector<Node *> getAdjSettlements();
     vector<Edge *> getAdjRoads();
 };
+
+#endif // NODE_HPP
