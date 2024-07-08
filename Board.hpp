@@ -1,3 +1,5 @@
+// minnesav@gmail.com
+
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
@@ -48,22 +50,22 @@ class Board
     {32, 41}, {34, 43}, {40, 47}, {42, 48}, {50, 51}, {44, 50}, {48, 51} // 65-71
 };
 
-vector<Tile> initializeTiles(int numTiles, vector<Node> &nodes, const vector<vector<int>> &tileData);
-vector<Node> initializeNodes(int numNodes, const vector<pair<int, int>> &edgeData, vector<Edge> &edges);
-vector<Edge> initializeEdges(int numEdges, const vector<pair<int, int>> &edgeData);
+vector<Tile> initializeTiles(int numTiles, vector<Node> &nodes, const vector<vector<int>> &tileData); // Initialize the tiles
+vector<Node> initializeNodes(int numNodes, const vector<pair<int, int>> &edgeData, vector<Edge> &edges); // Initialize the nodes
+vector<Edge> initializeEdges(int numEdges, const vector<pair<int, int>> &edgeData); // Initialize the edges
 
 public:
 
-Board();
-~Board();
+Board(); // Constructor
+~Board(); // Destructor
 
-Tile* getTile(int i);
-Node* getNode(int i);
-Edge* getEdge(int i);
+Tile* getTile(int i); // Get a tile
+Node* getNode(int i); // Get a node
+Edge* getEdge(int i); // Get an edge
 
-vector<Tile> getTiles();
-vector<Node> getNodes();
-vector<Edge> getEdges();
+vector<Tile> getTiles(); // Get the tiles
+vector<Node> getNodes(); // Get the nodes
+vector<Edge> getEdges(); // Get the edges
 
 };
 
