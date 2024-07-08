@@ -102,3 +102,13 @@ vector<Tile> Board::getTiles()
     return tiles;
 }
 
+vector<Node> Board::getNodes()
+{
+    return nodes;
+}
+
+vector<Edge> Board::getEdges()
+{
+    return edges;
+}
+
