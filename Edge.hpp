@@ -1,4 +1,12 @@
-#include "Player.hpp"
+#ifndef EDGE_HPP
+#define EDGE_HPP
+
+#include <vector>
+
+class Node;
+class Player;
+
+using namespace std;
 
 class Edge
 {
@@ -8,8 +16,8 @@ class Edge
 
 public:
 
-    Edge(int i) : id(i) {}
-    ~Edge();
+    Edge(int i);
+    ~Edge() = default;
 
     Player* getOwner();
     void setOwner(Player* o);
@@ -17,3 +25,5 @@ public:
     vector<Node *> getAdjSettlements();
     void setAdjSettlements(Node* n1, Node* n2);
 };
+
+#endif // EDGE_HPP
