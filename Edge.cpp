@@ -1,19 +1,20 @@
+// minnesav@gmail.com
+
 #include "Edge.hpp"
 
-Edge::Edge(int i) : id(i)
+Edge::Edge(int i) : id(i), owner(nullptr)
 {
-    owner = nullptr;
     this->adjNodes = {};
 }
 
-Player* Edge::getOwner()
+Player* Edge::getOwner() const
 {
     return owner;
 }
 
 void Edge::setOwner(Player* o)
 {
-    owner = o;
+    owner = o; 
 }
 
 vector<Node *> Edge::getAdjSettlements()
