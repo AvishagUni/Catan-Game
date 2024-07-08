@@ -6,15 +6,6 @@ Edge::Edge(int i) : id(i)
     this->adjNodes = {};
 }
 
-Edge::~Edge()
-{
-    for (int i = 0; i < 2; i++)
-    {
-        delete adjNodes[i];
-    }
-}
-
-
 Player* Edge::getOwner()
 {
     return owner;
