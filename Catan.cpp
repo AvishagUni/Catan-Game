@@ -1,27 +1,26 @@
 #include "Catan.hpp"
 
-Catan::Catan(Player* p1, Player* p2, Player* p3) {
-    players.push_back(p1);
-    players.push_back(p2);
-    players.push_back(p3);
+Catan::Catan(Player* p1, Player* p2, Player* p3): players{p1, p2, p3} {
+    board = new Board();
+    cout << "Welcome to the game!" << endl;
 }
 
 Catan::~Catan() {
     for(auto player : players) {
         delete player;
     }
+    delete board;
 }
 
-void Catan::buildRoad(int edgeId, Player* player) {
-    if (!player->canBuyRoad()) {
+void Catan::buildRoad(int edgeId, Player* player, bool firstRound) {
+    if (!player->canBuyRoad() && !firstRound) {
         throw invalid_argument("Not enough resources to build road");
     }
-
     if (edgeId < 0 || edgeId > 71) {
         throw invalid_argument("Invalid edge id");
     }
 
-    Edge* connectingEdge = board.getEdge(edgeId);
+    Edge* connectingEdge = board->getEdge(edgeId);
     if (connectingEdge == nullptr) {
         throw invalid_argument("Edge does not exist");
     }
@@ -51,12 +50,15 @@ void Catan::buildRoad(int edgeId, Player* player) {
     }
 
     connectingEdge->setOwner(player);
-    player->buyRoad(edgeId);
+    if(!firstRound) {
+        player->buyRoad(edgeId);
+    }
+    player->addRoad(edgeId);
     cout << "Road built successfully" << endl;
 }
 
-void Catan::buildSettlement(int nodeId, Player* p) {
-    if(!p->canBuySettlement()) {
+void Catan::buildSettlement(int nodeId, Player* p, bool firstRound) {
+    if(!p->canBuySettlement()&& !firstRound) {
         throw invalid_argument("Not enough resources to build settlement");
     }
     // Retrieve the node from the board using the index
@@ -64,7 +66,7 @@ void Catan::buildSettlement(int nodeId, Player* p) {
         throw invalid_argument("Invalid node id");
     }
 
-    Node* node = board.getNode(nodeId);
+    Node* node = board->getNode(nodeId);
 
     // Check if the node itself is already owned
     if (node->getOwner() != nullptr) {
@@ -82,7 +84,12 @@ void Catan::buildSettlement(int nodeId, Player* p) {
     }
 
     node->setOwner(p);
+    if(!firstRound) {
     p->buySettlement(nodeId);
+    board->getNode(nodeId)->setType();
+    }
+    p->addSettlement(nodeId);
+    board->getNode(nodeId)->setType();
     cout << "Settlement built successfully" << endl;
 }
 
@@ -95,7 +102,7 @@ void Catan::buildCity(int nodeId, Player* p) {
         throw invalid_argument("Invalid node id");
     }
 
-    Node* node = board.getNode(nodeId);
+    Node* node = board->getNode(nodeId);
 
     if (node->getOwner() != p) {
         throw invalid_argument("Node is not owned by player");
@@ -107,17 +114,22 @@ void Catan::buildCity(int nodeId, Player* p) {
 
     node->setType();
     p->buyCity(nodeId);
+    board->getNode(nodeId)->setType();
     cout << "City built successfully" << endl;
 }
 
+
 void Catan::distributeResources(int diceRoll) {
-    for (Tile tile : board.getTiles()) {
+    std::cout << "Distributing resources for dice roll: " << diceRoll << std::endl;
+    for (Tile tile : board->getTiles()) {
         if (tile.getNumber() == diceRoll) {
-            vector<size_t> nodes = tile.getNodes();
+            std::cout << "Tile ID: " << tile.getId() << " with resource " << static_cast<int>(tile.getResource()) << " is activated." << std::endl;
+            std::vector<size_t> nodes = tile.getNodes();
             for (size_t n : nodes) {
-                Node* node = board.getNode(n);
+                Node* node = board->getNode(n);
                 if (node->getOwner() != nullptr) {
                     node->getOwner()->modifyResources(node->getVal(), tile.getResource());
+                    std::cout << node->getOwner()->getName() << " receives " << node->getVal() << " of resource " << static_cast<int>(tile.getResource()) << std::endl;
                 }
             }
         }
@@ -131,6 +143,7 @@ void Catan::checkWinCondition() {
             return;
         }
     }
+    cout << "The game ended with a tie..." << endl;
 }
 
 void Catan::useDevelopmentCard(Player* player) {
@@ -166,21 +179,5 @@ void Catan::checkLargestArmy() {
     if (largestArmyPlayer != nullptr) {
         cout << largestArmyPlayer->getName() << " has the largest army!" << endl;
         largestArmyPlayer->modifyPoints(2);
-    }
-}
-
-void Catan::checkLongestRoad() {
-    size_t longestRoad = 0;
-    Player* longestRoadPlayer = nullptr;
-    for (Player* player : players) {
-        if (player->getRoads().size() > longestRoad) {
-            longestRoad = player->getRoads().size();
-            longestRoadPlayer = player;
-        }
-    }
-
-    if (longestRoadPlayer != nullptr) {
-        cout << longestRoadPlayer->getName() << " has the longest road!" << endl;
-        longestRoadPlayer->modifyPoints(2);
     }
 }
