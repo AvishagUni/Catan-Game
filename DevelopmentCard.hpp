@@ -4,14 +4,7 @@
 #include <vector>
 #include "Player.hpp"
 #include "Tile.hpp"
-
-enum class CardType {
-    VictoryPoint,
-    Knight,
-    RoadBuilding,
-    YearOfPlenty,
-    Monopoly
-};
+#include "CardType.hpp"
 
 class Player;
 
