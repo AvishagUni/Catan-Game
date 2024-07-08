@@ -1,3 +1,5 @@
+// minnesav@gmail.com
+
 #include "Board.hpp"
 #include <map>
 
@@ -16,6 +18,7 @@ Board::~Board()
     tiles.clear();
     edges.clear();
 }
+
 
 std::vector<Node> Board::initializeNodes(int numNodes, const std::vector<std::pair<int, int>>& edgeData, std::vector<Edge>& edges) {
     std::vector<Node> nodes;
@@ -42,12 +45,13 @@ std::vector<Node> Board::initializeNodes(int numNodes, const std::vector<std::pa
     return nodes;
 }
 
-// Function to initialize tiles
+
 vector<Tile> Board::initializeTiles(int numTiles, vector<Node> &nodes, const vector<vector<int>> &tileData)
 {
     vector<Tile> tiles;
     vector<int> tileNums = {10, 2, 9, 12, 6, 4, 10, 9, 11, 7, 3, 8, 8, 3, 4, 5, 5, 6, 11};
     vector<Resource> tileResources = {Resource::ORE, Resource::WOOL, Resource::LUMBER, Resource::GRAIN, Resource::BRICK, Resource::WOOL, Resource::BRICK, Resource::GRAIN, Resource::LUMBER, Resource::ORE, Resource::LUMBER, Resource::ORE, Resource::LUMBER, Resource::ORE, Resource::GRAIN, Resource::WOOL, Resource::BRICK, Resource::GRAIN, Resource::WOOL};
+    
     for (int i = 0; i < numTiles; i++)
     {
         tiles.push_back(Tile(i, tileNums[i], tileResources[i]));
@@ -62,6 +66,7 @@ vector<Tile> Board::initializeTiles(int numTiles, vector<Node> &nodes, const vec
     }
     return tiles;
 }
+
 
 // Function to initialize edges
 vector<Edge> Board::initializeEdges(int numEdges, const vector<pair<int, int>> &edgeData)
@@ -78,6 +83,7 @@ vector<Edge> Board::initializeEdges(int numEdges, const vector<pair<int, int>> &
     }
     return edges;
 }
+
 
 // Function to get a tile
 Tile *Board::getTile(int i)
