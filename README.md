@@ -1,48 +1,74 @@
-Catan Game Simulation
-Overview
+# Catan Game Simulation
 
-This project is a simulation of the popular board game Catan (formerly known as The Settlers of Catan). The simulation allows players to interact with a virtual board, build settlements and cities, construct roads, trade resources, and manage development cards. The game aims to mimic the rules and mechanics of the original Catan game in a digital format.
-Features
+This project is a simulation of the popular board game **Catan** (formerly known as *The Settlers of Catan*). It replicates the game’s mechanics digitally, allowing players to experience virtual gameplay that includes building, trading, resource management, and strategic planning.
 
-    Board Setup: Generates a randomized board with tiles, nodes (intersections), and edges (roads).
-    Player Actions: Players can perform actions such as building settlements, cities, and roads, trading resources, and purchasing development cards.
-    Resource Management: Players collect and manage resources (Brick, Grain, Lumber, Ore, Wool) necessary for construction and trading.
-    Development Cards: Includes different types of development cards (Victory Point, Knight, Road Building, Year of Plenty, Monopoly) that players can purchase and use strategically.
-    Win Condition: The game checks for a win condition where the first player to reach 10 points wins the game. Points are accumulated through settlements, cities, and certain development cards.
+---
 
-Classes and Structure
-Classes
+## 🎲 Game Overview
 
-    Player: Represents a player in the game, tracks resources, points, owned settlements, cities, roads, and development cards.
-    Node: Represents an intersection on the board where settlements and cities can be built.
-    Edge: Represents a road connecting nodes, which can be owned by players.
-    Tile: Represents a hexagonal tile on the board with a resource type and a dice number for resource production.
-    Board: Manages the overall game board, including nodes, edges, and tiles.
-    DevelopmentCard: Represents development cards that players can purchase and use during their turns.
+In this simulation, players can:
+- Build settlements, cities, and roads.
+- Collect resources and trade with others.
+- Purchase and use development cards strategically.
+- Compete to be the first to reach 10 victory points to win the game.
 
-Project Structure
+### Key Features
 
-    Main.cpp: Contains the main function to start the game.
-    Player.hpp/cpp: Definitions for the Player class, including resource management, actions, and interaction with the board.
-    Node.hpp/cpp: Definitions for the Node class, representing intersections on the board.
-    Edge.hpp/cpp: Definitions for the Edge class, representing roads connecting nodes.
-    Tile.hpp/cpp: Definitions for the Tile class, representing hexagonal tiles on the board.
-    Board.hpp/cpp: Definitions for the Board class, managing overall game state and interactions.
-    DevelopmentCard.hpp/cpp: Definitions for the DevelopmentCard class, handling actions related to development cards.
+- **Board Setup**: Generates a randomized game board with hexagonal resource tiles, nodes (for settlements/cities), and edges (for roads).
+- **Player Actions**: Includes actions like building, trading, and purchasing development cards.
+- **Resource Management**: Players collect resources (Brick, Grain, Lumber, Ore, Wool) for various constructions and trades.
+- **Development Cards**: Offers development cards with unique abilities (Victory Point, Knight, Road Building, Year of Plenty, Monopoly).
+- **Win Condition**: Checks for the win condition—first player to reach 10 points wins the game.
 
-Dependencies
+---
 
-    C++ Standard Library: Uses standard containers (vector, map) and utilities (iostream, algorithm).
-    Random Number Generation: Utilizes rand() for random number generation and srand(time(nullptr)) for seeding.
+## 🏗️ Classes and Structure
 
-How to Play
+- **Player**: Manages player-specific resources, points, and owned assets (settlements, cities, roads, and development cards).
+- **Node**: Represents intersections on the board where players can build settlements and cities.
+- **Edge**: Represents a road connecting two nodes, which can be owned by players.
+- **Tile**: Represents hexagonal tiles with resource types and dice numbers for resource production.
+- **Board**: Manages the overall game board, including nodes, edges, and tiles.
+- **DevelopmentCard**: Represents development cards that players can purchase and use during their turns.
 
-    Setup: Players are initialized with starting resources and can place their initial settlements and roads on the board.
-    Turns: Players take turns rolling dice, collecting resources based on dice rolls, and performing actions such as building settlements, cities, roads, trading, and using development cards.
-    Victory: The game ends when a player reaches 10 or more points (accumulated through settlements, cities, and certain development cards).
+---
 
-Notes
+## 📂 Project Structure
 
-    Randomness: The game includes random elements such as dice rolls and development card draws.
-    Error Handling: Proper error handling is implemented for invalid actions or moves.
-    Scalability: The board size and number of players can be adjusted by modifying constants and parameters in the source code.
+- **Main.cpp**: Entry point of the game, containing the main function.
+- **Player.hpp/cpp**: Defines the Player class, including resource management, actions, and interactions with the board.
+- **Node.hpp/cpp**: Defines the Node class, representing intersections on the board.
+- **Edge.hpp/cpp**: Defines the Edge class, representing roads.
+- **Tile.hpp/cpp**: Defines the Tile class, representing hexagonal resource tiles.
+- **Board.hpp/cpp**: Defines the Board class, managing the game’s overall state.
+- **DevelopmentCard.hpp/cpp**: Defines the DevelopmentCard class for handling actions related to development cards.
+
+---
+
+## 🛠️ Dependencies
+
+- **C++ Standard Library**: Uses standard containers (`vector`, `map`) and utilities (`iostream`, `algorithm`).
+- **Random Number Generation**: Utilizes `rand()` for generating random values and `srand(time(nullptr))` for seeding randomness.
+
+---
+
+## 🎮 How to Play
+
+1. **Setup**: Players start with initial resources and place their initial settlements and roads.
+2. **Turns**:
+   - Players roll dice to collect resources based on dice roll outcomes.
+   - Perform actions like building, trading, and using development cards.
+3. **Victory**: The game ends when a player reaches 10 or more victory points, earned through settlements, cities, and development cards.
+
+---
+
+## 📝 Notes
+
+- **Randomness**: The simulation includes random elements like dice rolls and card draws.
+- **Error Handling**: Implemented to handle invalid actions and moves.
+- **Scalability**: Board size and number of players can be adjusted by modifying constants in the source code.
+
+---
+
+This simulation project brings the strategic depth of Catan into a digital format, providing a foundation for learning about game development and object-oriented programming in C++. Enjoy building, trading, and strategizing your way to victory!
+
